@@ -158,6 +158,11 @@ jobs:
         run: cargo miri test --doc --all-features --no-fail-fast
         env:
           MIRIFLAGS: -Zmiri-disable-isolation -Zmiri-strict-provenance
+      - name: Run tests with Miri using poll selector
+        run: cargo miri test --all-features --test '*' --no-fail-fast
+        env:
+          MIRIFLAGS: -Zmiri-disable-isolation -Zmiri-strict-provenance
+          RUSTFLAGS: --cfg mio_unsupported_force_poll_poll
   CheckTargets:
     runs-on: ubuntu-latest
     timeout-minutes: 10
